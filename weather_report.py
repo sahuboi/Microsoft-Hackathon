@@ -36,8 +36,6 @@ else:
     wind_spd = str(data['wind']['speed'])
     sky = data['weather'][0]['main']
 
-    # print(response)
-
     print("Weather in",CITY_NAME+':')
     print("Temperature: "+temp+"°C\n"+"Max. Temperature: "+max_temp+"°C\n"+"Min. Temperature: "+min_temp+"°C\n"+"Feels Like: "+feel_temp+"°C")
     print("Pressure: "+pressure+"N/m^2\n"+"Humidity: "+humidity+"g/m^3")

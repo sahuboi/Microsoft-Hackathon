@@ -19,21 +19,26 @@ CITY_NAME = args.city
 
 URL = BASE_URL + "&q=" + CITY_NAME + "&appid=" + API_KEY + "&units=metric"
 
-response = requests.get(URL).json()
+try:
+    response = requests.get(URL)
+    response.raise_for_status()
+except requests.HTTPError as err:
+    print(err)
+else:
+    data = response.json()
+    temp =  str(data['main']['temp'])
+    feel_temp = str(data['main']['feels_like'])
+    min_temp = str(data['main']['temp_min'])
+    max_temp = str(data['main']['temp_max'])
+    pressure = str(data['main']['pressure'])
+    humidity = str(data['main']['humidity'])
+    visibility = str(data['visibility'])
+    wind_spd = str(data['wind']['speed'])
+    sky = data['weather'][0]['main']
 
-temp =  str(response['main']['temp'])
-feel_temp = str(response['main']['feels_like'])
-min_temp = str(response['main']['temp_min'])
-max_temp = str(response['main']['temp_max'])
-pressure = str(response['main']['pressure'])
-humidity = str(response['main']['humidity'])
-visibility = str(response['visibility'])
-wind_spd = str(response['wind']['speed'])
-sky = response['weather'][0]['main']
+    # print(response)
 
-# print(response)
-
-print("Weather in",CITY_NAME+':')
-print("Temperature: "+temp+"°C\n"+"Max. Temperature: "+max_temp+"°C\n"+"Min. Temperature: "+min_temp+"°C\n"+"Feels Like: "+feel_temp+"°C")
-print("Pressure: "+pressure+"N/m^2\n"+"Humidity: "+humidity+"g/m^3")
-print("Visibility: "+visibility+"m\n"+"Wind Speed: "+wind_spd+"m/s\n"+"Sky condition: "+sky)
+    print("Weather in",CITY_NAME+':')
+    print("Temperature: "+temp+"°C\n"+"Max. Temperature: "+max_temp+"°C\n"+"Min. Temperature: "+min_temp+"°C\n"+"Feels Like: "+feel_temp+"°C")
+    print("Pressure: "+pressure+"N/m^2\n"+"Humidity: "+humidity+"g/m^3")
+    print("Visibility: "+visibility+"m\n"+"Wind Speed: "+wind_spd+"m/s\n"+"Sky condition: "+sky)
